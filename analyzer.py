@@ -1,7 +1,7 @@
 class PythonAnalyzer:
     """
     self.ratio := the number of lines of comments versus the number of lines of code.
-    self.average_num_lines := the average number of comments in a row.
+    self.ave_conseq_comments := the average number of comments in a row.
     self.num_funcs := the number of functions per file
     self.num_func_calls := number of times a given function is called throughout a piece of code or a project.
     self.num_classes := the number of classes in a piece of code or project
@@ -26,7 +26,7 @@ class PythonAnalyzer:
                 sys.exit(0)
             #for each - key is file name, value is value of the data
             self.ratio = {}
-            self.average_num_lines = {}
+            self.ave_conseq_comments = {}
             self.num_funcs = {}
             self.num_func_calls = {}
             self.num_classes = {}
@@ -43,7 +43,7 @@ class PythonAnalyzer:
                 print "didn't pass in a file, but file was expected"
                 sys.exit(0)
             self.ratio = 0
-            self.average_num_lines = 0
+            self.ave_conseq_comments = 0
             self.num_funcs = 0
             self.num_func_calls = {} #keys are the functions, values are the calls
             self.num_classes = 0
@@ -83,3 +83,6 @@ class PythonAnalyzer:
             self.mean_ratio = float(summa)/len(self.ratio.keys())
         else:
             self.mean_ratio = None
+    def _conseq_comment_count(self):
+        if self.is_project:
+            
