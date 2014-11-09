@@ -1,0 +1,4 @@
+class PythonAnalyzer:
+    def __init__(self,code):
+        self.code = open(code,"r")
+        
