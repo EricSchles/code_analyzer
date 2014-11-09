@@ -10,6 +10,7 @@ class PythonAnalyzer:
     self.num_squared_algo := number of O(n^2) code blocks
     self.num_cubed_algo := number of O(n^3) code blocks
     self.num_4th_algo := number of O(n^4) code blocks
+    self.mean_ratio := the mean ratio across all the files in the code base
     """
   
     def __init__(self,code,is_project=False):
@@ -34,7 +35,8 @@ class PythonAnalyzer:
             self.num_squared_algo = {}
             self.num_cubed_algo = {}
             self.num_4th_algo = {}
-      else:
+            self.mean_ratio = {}
+        else:
             if os.path.isfile(code):
                 self.code = open(code,"r")
             else:
@@ -50,6 +52,7 @@ class PythonAnalyzer:
             self.num_squared_algo = {}
             self.num_cubed_algo = {}
             self.num_4th_algo = {}
+            self.mean_ratio = None
         self.is_project = is_project
 
     def _ratio(self):
@@ -74,5 +77,9 @@ class PythonAnalyzer:
             self.ratio = {"comments":comments,"non_comments":non_comments,"ratio":comments/float(len(self.code))}
                 
 
-    def mean(self):
-        
+    def _mean(self):
+        if self.is_project:
+            summa = sum([self.ratio[key]["ratio"] for key in self.ratio.keys()])
+            self.mean_ratio = float(summa)/len(self.ratio.keys())
+        else:
+            self.mean_ratio = None
