@@ -106,4 +106,18 @@ class PythonAnalyzer:
                         num_comments.append[conseq_comments]
                         conseq_comments = 0
                 self.ave_conseq_comments[pyfile] = self._mean(num_comments)
-                        
+        else:
+            ind = 0
+            tmp = self.code.read().split("\n")
+            num_comments = []
+            conseq_comments = 0
+            while ind < len(self.code):
+                if "#" in tmp[ind]:
+                    conseq_comments += 1
+                    ind += 1
+                    while "#" in tmp[ind]:
+                        conseq_comments += 1
+                        ind += 1
+                    num_comments.append[conseq_comments]
+                    conseq_comments = 0
+            self.ave_conseq_comments = self._mean(num_comments)
