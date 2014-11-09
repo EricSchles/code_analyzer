@@ -159,4 +159,13 @@ class PythonAnalyzer:
             for line in self.code:
                 for line in pyfile:
                     if "def" in line:
-                        func_name = line.split("def
+                        func_name = line.split("def")[1].split("(")[0].strip()
+                        self.num_func_calls[func_name] = 0
+            for line in self.code:
+                for key in self.num_func_calls.keys():
+                    if "def" in line:
+                        continue
+                    if key in line:
+                        self.num_func_calls[key] += 1
+
+
