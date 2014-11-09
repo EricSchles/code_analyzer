@@ -157,10 +157,9 @@ class PythonAnalyzer:
 
         else:
             for line in self.code:
-                for line in pyfile:
-                    if "def" in line:
-                        func_name = line.split("def")[1].split("(")[0].strip()
-                        self.num_func_calls[func_name] = 0
+                if "def" in line:
+                    func_name = line.split("def")[1].split("(")[0].strip()
+                    self.num_func_calls[func_name] = 0
             for line in self.code:
                 for key in self.num_func_calls.keys():
                     if "def" in line:
@@ -183,6 +182,7 @@ class PythonAnalyzer:
                     count += 1
             self.num_classes = count
 
+    self.num_class_instances = {}
     def _num_class_instances(self):
         if self.is_project:
             #getting all class names
@@ -193,22 +193,21 @@ class PythonAnalyzer:
                             class_name = line.split("class")[1].split("(")[0].strip()
                         else:
                             class_name = line.split("class")[1].split(":")[0].strip()
-                        self.num_func_calls[func_name] = 0
+                        self.num_class_instances[class_name] = 0
             #how many times each function is called
             for pyfile in self.code:
                 for line in pyfile:
-                    for key in self.num_func_calls.keys():
-                        if "def" in line:
+                    for key in self.num_class_instances.keys():
+                        if "class" in line:
                             continue
                         if key in line:
                             self.num_func_calls[key] += 1
 
         else:
             for line in self.code:
-                for line in pyfile:
-                    if "def" in line:
-                        func_name = line.split("def")[1].split("(")[0].strip()
-                        self.num_func_calls[func_name] = 0
+                if "class" in line:
+                    func_name = line.split("def")[1].split("(")[0].strip()
+                    self.num_func_calls[func_name] = 0
             for line in self.code:
                 for key in self.num_func_calls.keys():
                     if "def" in line:
