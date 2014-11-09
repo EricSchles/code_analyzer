@@ -1,3 +1,4 @@
+import numbers
 class PythonAnalyzer:
     """
     self.ratio := the number of lines of comments versus the number of lines of code.
@@ -77,12 +78,22 @@ class PythonAnalyzer:
             self.ratio = {"comments":comments,"non_comments":non_comments,"ratio":comments/float(len(self.code))}
                 
 
-    def _mean(self):
+    def _mean(self,listing):
+        if all([isinstance(x,numbers.Real) for x in listing]): 
+            summa = sum(listing)
+            return float(summa)/len(listing)
+
+    def _mean_ratio(self):
         if self.is_project:
-            summa = sum([self.ratio[key]["ratio"] for key in self.ratio.keys()])
-            self.mean_ratio = float(summa)/len(self.ratio.keys())
+            self.mean_ratio = self._mean([self.ratio[key]["ratio"] for key in self.ratio.keys()])
         else:
             self.mean_ratio = None
+    
     def _conseq_comment_count(self):
         if self.is_project:
-            
+            for pyfile in self.code:
+                ind = 0
+                tmp = pyfile.read().split("\n")
+                num_comments = []
+                while ind < len(pyfile):
+                    if 
