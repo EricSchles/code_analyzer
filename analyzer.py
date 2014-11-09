@@ -54,6 +54,25 @@ class PythonAnalyzer:
 
     def _ratio(self):
         if self.is_project:
-            for 
+            for pyfile in self.code:
+                comments = 0
+                non_comments = 0
+                for line in pyfile:
+                    if "#" in line:
+                        comments += 1
+                    else:
+                        non_comments += 1
+                self.ratio[pyfile] = {"comments":comments,"non_comments":non_comments,"ratio":comments/float(len(pyfile))}
+        else:
+            comments = 0
+            non_comments = 0
+            for line in self.code:
+                if "#" in line:
+                    comments += 1
+                else:
+                    non_comments += 1
+            self.ratio = {"comments":comments,"non_comments":non_comments,"ratio":comments/float(len(self.code))}
+                
+
     def mean(self):
         
