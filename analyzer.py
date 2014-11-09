@@ -194,7 +194,7 @@ class PythonAnalyzer:
                         else:
                             class_name = line.split("class")[1].split(":")[0].strip()
                         self.num_class_instances[class_name] = 0
-            #how many times each function is called
+            #how many times each class is instantiated
             for pyfile in self.code:
                 for line in pyfile:
                     for key in self.num_class_instances.keys():
@@ -206,12 +206,15 @@ class PythonAnalyzer:
         else:
             for line in self.code:
                 if "class" in line:
-                    func_name = line.split("def")[1].split("(")[0].strip()
-                    self.num_func_calls[func_name] = 0
+                    if "(" in line:
+                        class_name = line.split("class")[1].split("(")[0].strip()
+                    else:
+                        class_name = line.split("class")[1].split(":")[0].strip()
+                    self.num_class_instances[class_name] = 0
             for line in self.code:
-                for key in self.num_func_calls.keys():
-                    if "def" in line:
+                for key in self.num_class_instances.keys():
+                    if "class" in line:
                         continue
                     if key in line:
-                        self.num_func_calls[key] += 1
+                        self.num_class_instances[key] += 1
     
