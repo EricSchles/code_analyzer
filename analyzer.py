@@ -20,7 +20,7 @@ class PythonAnalyzer:
                 pyfiles = glob(code+"/*.py")
                 self.code = []
                 for pyfile in pyfiles:
-                    tmp = open(pyfile,"r")
+                    tmp = open(pyfile,"r").read()
                     self.code.append(tmp)
             else:
                 print "didn't pass in a file, but a file was expected"
@@ -39,7 +39,7 @@ class PythonAnalyzer:
             self.mean_ratio = {}
         else:
             if os.path.isfile(code):
-                self.code = open(code,"r")
+                self.code = open(code,"r").read()
             else:
                 print "didn't pass in a file, but file was expected"
                 sys.exit(0)
@@ -93,7 +93,7 @@ class PythonAnalyzer:
         if self.is_project:
             for pyfile in self.code:
                 ind = 0
-                tmp = pyfile.read().split("\n")
+                tmp = pyfile.split("\n")
                 num_comments = []
                 conseq_comments = 0
                 while ind < len(pyfile):
@@ -108,7 +108,7 @@ class PythonAnalyzer:
                 self.ave_conseq_comments[pyfile] = self._mean(num_comments)
         else:
             ind = 0
-            tmp = self.code.read().split("\n")
+            tmp = self.code.split("\n")
             num_comments = []
             conseq_comments = 0
             while ind < len(self.code):
