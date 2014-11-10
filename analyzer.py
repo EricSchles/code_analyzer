@@ -61,11 +61,11 @@ class PythonAnalyzer:
     def call_methods(self):
         self._ratio()
         self._mean_ratio()
-        self._conseq_comment_count()
+        #self._conseq_comment_count()
         self._num_functions()
         self._num_func_calls()
-        #self._num_classes()
-        #self._num_class_instances()
+        self._num_classes()
+        self._num_class_instances()
 
     def _ratio(self):
         if self.is_project:
@@ -119,7 +119,7 @@ class PythonAnalyzer:
                 self.ave_conseq_comments[pyfile] = self._mean(num_comments)
         else:
             ind = 0
-            tmp = self.code.split("\n")
+            tmp = self.code
             num_comments = []
             conseq_comments = 0
             while ind < len(self.code):
