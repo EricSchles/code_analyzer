@@ -1,4 +1,5 @@
 import numbers
+import os
 class PythonAnalyzer:
     """
     self.ratio := the number of lines of comments versus the number of lines of code.
@@ -39,7 +40,7 @@ class PythonAnalyzer:
             self.mean_ratio = {}
         else:
             if os.path.isfile(code):
-                self.code = open(code,"r").read()
+                self.code = open(code,"r").read().split("\n")
             else:
                 print "didn't pass in a file, but file was expected"
                 sys.exit(0)
@@ -55,6 +56,16 @@ class PythonAnalyzer:
             self.num_4th_algo = {}
             self.mean_ratio = None
         self.is_project = is_project
+        self.call_methods()
+    
+    def call_methods(self):
+        self._ratio()
+        self._mean_ratio()
+        self._conseq_comment_count()
+        self._num_functions()
+        self._num_func_calls()
+        #self._num_classes()
+        #self._num_class_instances()
 
     def _ratio(self):
         if self.is_project:
@@ -132,9 +143,11 @@ class PythonAnalyzer:
                         count += 1
                 self.num_funcs[pyfile] = count
         else:
+            print self.code
             count = 0
             for line in self.code:
                 if "def" in line:
+                    print "got here"
                     count += 1
             self.num_funcs = count
 
@@ -218,11 +231,11 @@ class PythonAnalyzer:
                     if key in line:
                         self.num_class_instances[key] += 1
     
-    self.num_linear_algo = {}
-    def _linear_algo(self):
-        if self.is_project:
-            for pyfile in self.code:
+    # self.num_linear_algo = {}
+    # def _linear_algo(self):
+    #     if self.is_project:
+    #         for pyfile in self.code:
                 
-                for line in pyfile:
+    #             for line in pyfile:
                     
 
