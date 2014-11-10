@@ -182,7 +182,7 @@ class PythonAnalyzer:
                     count += 1
             self.num_classes = count
 
-    self.num_class_instances = {}
+    
     def _num_class_instances(self):
         if self.is_project:
             #getting all class names
@@ -218,3 +218,11 @@ class PythonAnalyzer:
                     if key in line:
                         self.num_class_instances[key] += 1
     
+    self.num_linear_algo = {}
+    def _linear_algo(self):
+        if self.is_project:
+            for pyfile in self.code:
+                
+                for line in pyfile:
+                    
+
