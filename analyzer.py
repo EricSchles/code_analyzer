@@ -61,7 +61,7 @@ class PythonAnalyzer:
     def call_methods(self):
         self._ratio()
         self._mean_ratio()
-        #self._conseq_comment_count()
+        self._conseq_comment_count()
         self._num_functions()
         self._num_func_calls()
         self._num_classes()
@@ -90,10 +90,12 @@ class PythonAnalyzer:
                 
 
     def _mean(self,listing):
-        if all([isinstance(x,numbers.Real) for x in listing]): 
-            summa = sum(listing)
-            return float(summa)/len(listing)
-
+        if listing != []:
+            if all([isinstance(x,numbers.Real) for x in listing]): 
+                summa = sum(listing)
+                return float(summa)/len(listing)
+        else:
+            return None
     def _mean_ratio(self):
         if self.is_project:
             self.mean_ratio = self._mean([self.ratio[key]["ratio"] for key in self.ratio.keys()])
@@ -116,6 +118,7 @@ class PythonAnalyzer:
                             ind += 1
                         num_comments.append[conseq_comments]
                         conseq_comments = 0
+                    ind += 1
                 self.ave_conseq_comments[pyfile] = self._mean(num_comments)
         else:
             ind = 0
@@ -131,6 +134,7 @@ class PythonAnalyzer:
                         ind += 1
                     num_comments.append[conseq_comments]
                     conseq_comments = 0
+                ind += 1
             self.ave_conseq_comments = self._mean(num_comments)
     
 
